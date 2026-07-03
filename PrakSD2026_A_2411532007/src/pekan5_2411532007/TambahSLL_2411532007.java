@@ -1,90 +1,106 @@
 package pekan5_2411532007;
 
 public class TambahSLL_2411532007 {
-	public static NodeSLL_2411532007 insertAtFront(NodeSLL_2411532007 head2007, int value2007) {
-		NodeSLL_2411532007 new_node2007 = new NodeSLL_2411532007(value2007);
-		new_node2007.next2007 = head2007;
-		return new_node2007;
-	}
 	
-	public static NodeSLL_2411532007 insertAtEnd(NodeSLL_2411532007 head2007,int value2007) {
-		
-		NodeSLL_2411532007 newNode2007 = new NodeSLL_2411532007(value2007);
-		if (head2007 == null) {
-			return newNode2007;
+	public static NodeSLL_2411532007 insertAtFront_2007(NodeSLL_2411532007 head_2007, int value_2007) {
+		NodeSLL_2411532007 new_node_2007 = new NodeSLL_2411532007(value_2007);
+		new_node_2007.next_2007 = head_2007;
+		return new_node_2007;
+	}
+	// fungsi menambahkan node di akhir SLL
+		public static NodeSLL_2411532007 insertAtEnd_2007(NodeSLL_2411532007 head_2007, int value_2007) {
+			// buat sebuah node dengan sebuah nilai
+			NodeSLL_2411532007 newNode_2007 = new NodeSLL_2411532007(value_2007);
+			// jika list kosong maka node jadi head
+			if (head_2007 == null) {
+				return newNode_2007;
+			}
+		// simpan head ke variabel sementara
+			NodeSLL_2411532007 last_2007 = head_2007;
+			// telusuri ke node akhir
+			while (last_2007.next_2007 != null) {
+				last_2007 = last_2007.next_2007;
+			}
+			// ubah pointer 
+			last_2007.next_2007 = newNode_2007;
+			return head_2007;
 		}
 		
-		NodeSLL_2411532007 last = head2007;
-		while (last.next2007 != null) {
-			last = last.next2007;
+		static NodeSLL_2411532007 GetNode_2007(int data_2007) {
+			return new NodeSLL_2411532007(data_2007);
 		}
-		last.next2007 = newNode2007;
-		return head2007;
-	}
-	static NodeSLL_2411532007 GetNode(int data2007) {
-		return new NodeSLL_2411532007(data2007);
-	}
-	
-	static NodeSLL_2411532007 insertPos (NodeSLL_2411532007 headNode2007, int position2007,int value2007) {
-		NodeSLL_2411532007 head2007 = headNode2007;
-		if (position2007 < 1)
-			System.out.print("invalid position");
-		if(position2007 == 1) {
-			NodeSLL_2411532007 new_node2007 = new NodeSLL_2411532007(value2007);
-			new_node2007.next2007 = head2007;
-			return new_node2007;
-		} else {
-			while (position2007-- != 0) {
-				if(position2007 == 1) {
-					NodeSLL_2411532007 newNode2007 = GetNode(value2007);
-					newNode2007.next2007 = headNode2007.next2007;
-					headNode2007.next2007 = newNode2007;
-					break;
+		
+		static NodeSLL_2411532007 insertPos_2007(NodeSLL_2411532007 headNode_2007, int position_2007, int value_2007) {
+			NodeSLL_2411532007 head_2007 = headNode_2007;
+			if (position_2007 < 1) {
+				System.out.print("Invalid position");
+			}
+			if (position_2007 == 1) {
+				NodeSLL_2411532007 new_node_2007 = new NodeSLL_2411532007(value_2007);
+				new_node_2007.next_2007 = head_2007;
+				return new_node_2007;
+			} else {
+				while (position_2007-- != 0) {
+					if (position_2007 == 1) {
+						NodeSLL_2411532007 newNode_2007 = GetNode_2007(value_2007);
+						newNode_2007.next_2007 = headNode_2007.next_2007;
+						headNode_2007.next_2007 = newNode_2007;
+						break;
+					}
+					headNode_2007 = headNode_2007.next_2007;
 				}
-				headNode2007 = headNode2007.next2007;
+			if (position_2007 != 1) 
+			System.out.print("Posisi di luar jangkauan"); 
 			}
-			if (position2007 != 1)
-				System.out.print("Posisi diluar jangkauan");}
-			return head2007;
-		}
-	
-		public static void printList (NodeSLL_2411532007 head2007) {
-				NodeSLL_2411532007 curr = head2007;
-			while (curr.next2007 != null) {
-				System.out.print(curr.data2007+"-->");
-				curr = curr.next2007;
+			return head_2007;
 			}
-			if (curr.next2007==null) {
-				System.out.print(curr.data2007); }
-				System.out.println();
-			}
-			public static void main(String[] args) {
-				NodeSLL_2411532007 head2007 = new NodeSLL_2411532007(2);
-				head2007.next2007 = new NodeSLL_2411532007(3);
-				head2007.next2007.next2007 = new NodeSLL_2411532007(5);
-				head2007.next2007.next2007.next2007 = new NodeSLL_2411532007(6);
-				
-				System.out.print("Senarai berantai awal:");
-				printList(head2007);
-				
-				System.out.print("tambah 2 simpul didepan:");
-				int data2007 = 1;
-				head2007 = insertAtFront(head2007, data2007);
-				printList(head2007);
-				
-				System.out.println("tambah 1 simpul di belakang: ");
-				int data22007 = 7;
-				head2007 = insertAtEnd(head2007, data22007);
-				printList(head2007);
-				
-				System.out.print("tambah 1 simpul ke data 4: ");
-				int data32007 = 4;
-				int pos2007 = 4;
-				head2007 = insertPos(head2007,pos2007,data32007);
-				printList(head2007);
-				
 			
+		public static void printList_2007(NodeSLL_2411532007 head_2007) {
+			NodeSLL_2411532007 curr_2007 = head_2007;
+				while (curr_2007.next_2007 != null) {
+					System.out.print(curr_2007.data_2007 + "-->");
+					curr_2007 = curr_2007.next_2007;
 			}
-
+			if (curr_2007.next_2007 == null) {
+				System.out.print(curr_2007.data_2007);
+			}
+			System.out.println();
+		}
+		
+		public static void main (String[] args) {
+			// buat linked list 2->3->5->6
+			NodeSLL_2411532007 head_2007 = new NodeSLL_2411532007(2);
+			head_2007.next_2007 = new NodeSLL_2411532007(3);
+			head_2007.next_2007.next_2007 = new NodeSLL_2411532007(5);
+			head_2007.next_2007.next_2007.next_2007 = new NodeSLL_2411532007(6);
+			
+			// cetak list asli
+			System.out.print("Senarai berantai awal:");
+			printList_2007(head_2007);
+			
+			// tambahkan node baru di depan
+			System.out.print("tambah 1 simpul di depan: ");
+			int data_2007 = 1;
+			head_2007 = insertAtFront_2007(head_2007, data_2007);
+			
+			// cetak update list
+			printList_2007(head_2007);
+			
+			// tambahkan node baru di belakang 
+			System.out.print("tambah 1 simpul di belakang: ");
+			int data2_2007 = 7;
+			head_2007 = insertAtEnd_2007(head_2007, data2_2007);
+			
+			// cetak update list 
+			printList_2007(head_2007);
+			System.out.print("tambah 1 simpul ke data 4: ");
+			int data3_2007 = 4;
+			int pos_2007 = 4;
+			head_2007 = insertPos_2007(head_2007, pos_2007, data3_2007);
+			
+			// cetak update list
+			printList_2007(head_2007);
+			
+		}
+				
 }
-	

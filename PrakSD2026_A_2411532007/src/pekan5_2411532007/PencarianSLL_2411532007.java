@@ -1,41 +1,41 @@
 package pekan5_2411532007;
 
 public class PencarianSLL_2411532007 {
-	static boolean searchKey(NodeSLL_2411532007 head2007,int key2007) {
-		NodeSLL_2411532007 curr = head2007;
-		while (curr != null) {
-			if (curr.data2007 == key2007)
+	static boolean searchKey_2007(NodeSLL_2411532007 head_2007, int key_2007) {
+		NodeSLL_2411532007 curr_2007 = head_2007;
+		while (curr_2007 != null) {
+			if (curr_2007.data_2007 == key_2007)
 				return true;
-					curr = curr.next2007;
+			curr_2007 = curr_2007.next_2007;
 		}
 		return false;
 	}
 	
-	public static void traversal (NodeSLL_2411532007 head2007) {
-		NodeSLL_2411532007 curr = head2007;
-		
-		while (curr != null) {
-			System.out.print(" " + curr.data2007);
-			curr = curr.next2007;
+	public static void traversal_2007(NodeSLL_2411532007 head_2007) {
+		// mulai dari head
+		NodeSLL_2411532007 curr_2007 = head_2007;
+		while (curr_2007 != null) {
+			System.out.print(" " + curr_2007.data_2007);
+			curr_2007 = curr_2007.next_2007;
 		}
 		System.out.println();
 	}
 	
 	public static void main(String[] args) {
-		NodeSLL_2411532007 head2007 = new NodeSLL_2411532007(14);
-		head2007.next2007 = new NodeSLL_2411532007(21);
-		head2007.next2007.next2007 = new NodeSLL_2411532007(13);
-		head2007.next2007.next2007.next2007 = new NodeSLL_2411532007(30);
-		head2007.next2007.next2007.next2007.next2007 = new NodeSLL_2411532007(10);
+		NodeSLL_2411532007 head_2007 = new NodeSLL_2411532007(14);
+		head_2007.next_2007 = new NodeSLL_2411532007(21);
+		head_2007.next_2007.next_2007 = new NodeSLL_2411532007(13);
+		head_2007.next_2007.next_2007.next_2007 = new NodeSLL_2411532007(30);
+		head_2007.next_2007.next_2007.next_2007.next_2007 = new NodeSLL_2411532007(10);
 		System.out.print("Penelusuran SLL : ");
-		traversal(head2007);
-		
-		int key2007 = 30;
-		System.out.println("cari data "+key2007+ " = ");
-		if (searchKey(head2007, key2007))
+		traversal_2007(head_2007);
+		// data yang akan dicari
+		int key_2007 = 30;
+		System.out.print("cari data " +key_2007+ " = ");
+		if (searchKey_2007(head_2007, key_2007))
 			System.out.println("ketemu");
-		else
+		else 
 			System.out.println("tidak ada");
-		
-	}
+	} 
+
 }

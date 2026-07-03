@@ -1,0 +1,272 @@
+package pekan8_2411532007;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+public class MergeSortGui_2411532007 extends JFrame {
+
+    private static final long serialVersionUID_2007 = 1L;
+
+    private int[] array_2007;
+    private JLabel[] labelArray_2007;
+    private JButton stepButton_2007, resetButton_2007, setButton_2007;
+    private JTextField inputField_2007;
+    private JPanel panelArray_2007;
+    private JTextArea stepArea_2007;
+
+    private int i_2007, j_2007, k_2007;
+    private int left_2007, mid_2007, right_2007;
+    private int[] temp_2007;
+
+    private boolean isMerging_2007 = false;
+    private boolean copying_2007 = false;
+    private int stepCount_2007 = 1;
+
+    private Queue<int[]> mergeQueue_2007 = new LinkedList<>();
+
+    public MergeSortGui_2411532007() {
+        setTitle("Merge Sort Langkah per Langkah");
+        setSize(750, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        // Panel input
+        JPanel inputPanel_2007 = new JPanel(new FlowLayout());
+        inputField_2007 = new JTextField(30);
+        setButton_2007 = new JButton("Set Array");
+        inputPanel_2007.add(new JLabel("Masukkan angka (pisahkan dengan koma):"));
+        inputPanel_2007.add(inputField_2007);
+        inputPanel_2007.add(setButton_2007);
+
+        // Panel array visual
+        panelArray_2007 = new JPanel();
+        panelArray_2007.setLayout(new FlowLayout());
+
+        // Panel kontrol
+        JPanel controlPanel_2007 = new JPanel();
+        stepButton_2007 = new JButton("Langkah Selanjutnya");
+        resetButton_2007 = new JButton("Reset");
+        stepButton_2007.setEnabled(false);
+        controlPanel_2007.add(stepButton_2007);
+        controlPanel_2007.add(resetButton_2007);
+
+        // Area teks untuk log langkah-langkah
+        stepArea_2007 = new JTextArea(8, 60);
+        stepArea_2007.setEditable(false);
+        stepArea_2007.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        JScrollPane scrollPane_2007 = new JScrollPane(stepArea_2007);
+
+        // Tambahkan panel ke frame
+        add(inputPanel_2007, BorderLayout.NORTH);
+        add(panelArray_2007, BorderLayout.CENTER);
+        add(controlPanel_2007, BorderLayout.SOUTH);
+        add(scrollPane_2007, BorderLayout.EAST);
+
+        // Event Set Array
+        setButton_2007.addActionListener(e_2007 -> setArrayFromInput_2007());
+
+        // Event Langkah Selanjutnya
+        stepButton_2007.addActionListener(e_2007 -> performStep_2007());
+
+        // Event Reset
+        resetButton_2007.addActionListener(e_2007 -> reset_2007());
+    }
+
+    private void setArrayFromInput_2007() {
+        String text_2007 = inputField_2007.getText().trim();
+        if (text_2007.isEmpty()) return;
+
+        String[] parts_2007 = text_2007.split(",");
+        array_2007 = new int[parts_2007.length];
+
+        try {
+            for (int i_2007 = 0; i_2007 < parts_2007.length; i_2007++) {
+                array_2007[i_2007] = Integer.parseInt(parts_2007[i_2007].trim());
+            }
+        } catch (NumberFormatException e_2007) {
+            JOptionPane.showMessageDialog(this, "Masukkan hanya angka!",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        labelArray_2007 = new JLabel[array_2007.length];
+        panelArray_2007.removeAll();
+
+        for (int i_2007 = 0; i_2007 < array_2007.length; i_2007++) {
+            labelArray_2007[i_2007] = new JLabel(String.valueOf(array_2007[i_2007]));
+            labelArray_2007[i_2007].setFont(new Font("Arial", Font.BOLD, 24));
+            labelArray_2007[i_2007].setOpaque(true);
+            labelArray_2007[i_2007].setBackground(Color.WHITE);
+            labelArray_2007[i_2007].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            labelArray_2007[i_2007].setPreferredSize(new Dimension(50, 50));
+            labelArray_2007[i_2007].setHorizontalAlignment(SwingConstants.CENTER);
+            panelArray_2007.add(labelArray_2007[i_2007]);
+        }
+
+        mergeQueue_2007.clear();
+        generateMergeSteps_2007(0, array_2007.length - 1);
+
+        stepButton_2007.setEnabled(true);
+        stepArea_2007.setText("");
+        stepCount_2007 = 1;
+        isMerging_2007 = false;
+        copying_2007 = false;
+
+        panelArray_2007.revalidate();
+        panelArray_2007.repaint();
+    }
+
+    private void generateMergeSteps_2007(int left_2007, int right_2007) {
+        if (left_2007 < right_2007) {
+            int mid_2007 = left_2007 + (right_2007 - left_2007) / 2;
+
+            generateMergeSteps_2007(left_2007, mid_2007);
+            generateMergeSteps_2007(mid_2007 + 1, right_2007);
+
+            mergeQueue_2007.add(new int[] { left_2007, mid_2007, right_2007 });
+        }
+    }
+
+    private void performStep_2007() {
+        resetHighlights_2007();
+
+        if (!isMerging_2007 && !mergeQueue_2007.isEmpty()) {
+            int[] range_2007 = mergeQueue_2007.poll();
+
+            left_2007 = range_2007[0];
+            mid_2007 = range_2007[1];
+            right_2007 = range_2007[2];
+
+            temp_2007 = new int[right_2007 - left_2007 + 1];
+
+            i_2007 = left_2007;
+            j_2007 = mid_2007 + 1;
+            k_2007 = 0;
+
+            copying_2007 = false;
+            isMerging_2007 = true;
+
+            stepArea_2007.append(
+                    "Langkah " + stepCount_2007++
+                            + ": Mulai merge dari "
+                            + left_2007 + " ke "
+                            + right_2007 + "\n"
+            );
+
+            return;
+        }
+
+        if (isMerging_2007 && !copying_2007) {
+            if (i_2007 <= mid_2007 && j_2007 <= right_2007) {
+                labelArray_2007[i_2007].setBackground(Color.CYAN);
+                labelArray_2007[j_2007].setBackground(Color.CYAN);
+
+                if (array_2007[i_2007] <= array_2007[j_2007]) {
+                    temp_2007[k_2007++] = array_2007[i_2007++];
+                } else {
+                    temp_2007[k_2007++] = array_2007[j_2007++];
+                }
+
+                stepArea_2007.append(
+                        "Langkah " + stepCount_2007++
+                                + ": Bandingkan dan salin elemen\n"
+                );
+
+                return;
+
+            } else if (i_2007 <= mid_2007) {
+                temp_2007[k_2007++] = array_2007[i_2007++];
+
+                stepArea_2007.append(
+                        "Langkah " + stepCount_2007++
+                                + ": Salin sisa kiri\n"
+                );
+
+                return;
+
+            } else if (j_2007 <= right_2007) {
+                temp_2007[k_2007++] = array_2007[j_2007++];
+
+                stepArea_2007.append(
+                        "Langkah " + stepCount_2007++
+                                + ": Salin sisa kanan\n"
+                );
+
+                return;
+
+            } else {
+                copying_2007 = true;
+                k_2007 = 0;
+                return;
+            }
+        }
+
+        if (copying_2007 && k_2007 < temp_2007.length) {
+            array_2007[left_2007 + k_2007] = temp_2007[k_2007];
+            labelArray_2007[left_2007 + k_2007].setText(String.valueOf(temp_2007[k_2007]));
+            labelArray_2007[left_2007 + k_2007].setBackground(Color.GREEN);
+            k_2007++;
+
+            stepArea_2007.append("Langkah " + stepCount_2007++ + ": Tempelkan ke array utama\n");
+            return;
+        }
+
+        if (copying_2007 && k_2007 == temp_2007.length) {
+            isMerging_2007 = false;
+            copying_2007 = false;
+        }
+
+        if (mergeQueue_2007.isEmpty() && !isMerging_2007) {
+            stepArea_2007.append("Selesai.\n");
+            stepButton_2007.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Merge Sort selesai!");
+        }
+    }
+
+    private void resetHighlights_2007() {
+        if (labelArray_2007 == null) return;
+
+        for (JLabel label_2007 : labelArray_2007) {
+            label_2007.setBackground(Color.WHITE);
+        }
+    }
+
+    private void reset_2007() {
+        inputField_2007.setText("");
+        panelArray_2007.removeAll();
+        panelArray_2007.revalidate();
+        panelArray_2007.repaint();
+        stepArea_2007.setText("");
+        stepButton_2007.setEnabled(false);
+        mergeQueue_2007.clear();
+        isMerging_2007 = false;
+        copying_2007 = false;
+        stepCount_2007 = 1;
+    }
+
+    public static void main(String[] args_2007) {
+        SwingUtilities.invokeLater(() -> {
+            MergeSortGui_2411532007 frame_2007 = new MergeSortGui_2411532007();
+            frame_2007.setVisible(true);
+        });
+    }
+}
